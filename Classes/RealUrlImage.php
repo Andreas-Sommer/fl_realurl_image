@@ -534,7 +534,7 @@ class RealUrlImage extends ContentObjectRenderer
         $currentPage = $this->getTypoScriptFrontendController()->id;
         if ($cache->has($cacheIdent)) {
             $data = $cache->get($cacheIdent);
-            $pids = GeneralUtility::intExplode(',', (string)$data['page_id'], true);
+            $pids = GeneralUtility::intExplode(',', (string) ($data['page_id'] ?? []), true);
             if (!in_array($currentPage, $pids)) {
                 $pids[] = $currentPage;
             }
