@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2025-05-08T10:43:00Z" product-name="fl_realurl_image">
+		<body>
+			<trans-unit id="sys_file_metadata.realurl_image_name">
+				<source>RealURL Image Name (without file extension)</source>
+			</trans-unit>
+			<trans-unit id="fl_realurl_image.tabletitle">
+				<source>Image RealURL Cache</source>
+			</trans-unit>
+			<trans-unit id="fl_realurl_image.image_path">
+				<source>Image Path</source>
+			</trans-unit>
+			<trans-unit id="fl_realurl_image.realurl_path">
+				<source>RealURL Path</source>
+			</trans-unit>
+			<trans-unit id="fl_realurl_image.page_id">
+				<source>Page</source>
+			</trans-unit>
+			<trans-unit id="fl_realurl_image.crdate">
+				<source>Create date</source>
+			</trans-unit>
+
+			<trans-unit id="fl_realurl_image.ext_conf_cacheControl">
+				<source>cacheControl: Enable the Cache Control Feature to get a better performance, images will be loaded from browser cache</source>
+			</trans-unit>
+			<trans-unit id="fl_realurl_image.ext_conf_fileLinks">
+				<source>fileLinks: Chose which file links you desire, none, softLinks, hardLinks or ture copies. File links enables that images can be displayed with no need of DB-request as they really exist. A great deal for performance!</source>
+			</trans-unit>
+			<trans-unit id="fl_realurl_image.ext_conf_virtualPathRemove">
+				<source>virtualPathRemove: Virtually remove this segment from the image path. (Notice, this will only work if you set .htaccess accordingly)</source>
+			</trans-unit>
+
+			<trans-unit id="fl_realurl_image.conf_enable">
+				<source>enable: switch the extension on or off</source>
+			</trans-unit>
+			<trans-unit id="fl_realurl_image.conf_data">
+				<source>data: This is how the extension gets it's information to generate a cool image url. Examples are fal:title, fal:description, page:title</source>
+			</trans-unit>
+			<trans-unit id="fl_realurl_image.conf_case">
+				<source>case: The image file name should be in upper or lower case?</source>
+			</trans-unit>
+			<trans-unit id="fl_realurl_image.conf_trim">
+				<source>trim: removes leading and ending white space</source>
+			</trans-unit>
+			<trans-unit id="fl_realurl_image.conf_crop">
+				<source>crop: Limits the maximum length of a image file name</source>
+			</trans-unit>
+			<trans-unit id="fl_realurl_image.conf_spaceCharacter">
+				<source>spaceCharacter: Space character in the generated file name</source>
+			</trans-unit>
+			<trans-unit id="fl_realurl_image.conf_hashLength">
+				<source>hashLength: To keep the file names static, not depending on cache and order of image viewed - Important for SEO! This specifies the legth of the hash. The hash will get longer if necessary automatically</source>
+			</trans-unit>
+			<trans-unit id="fl_realurl_image.conf_smartEncoding">
+				<source>smartEncoding: gereates ASCII file-names</source>
+			</trans-unit>
+			<trans-unit id="fl_realurl_image.conf_imageFolder">
+				<source>imageFolder: A folder where the images are supposed to be stored. Don't start the folder with a "/". The path is relativ to the TYPO3 main directory.</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

@@ -178,24 +178,50 @@ class RealUrlImage extends ContentObjectRenderer
     public function main(array $conf, array $info, mixed $file = null, $cObj = null)
     {
         $this->initConfiguration();
+
+        $isFrontend = isset($GLOBALS['TSFE']);
+        if($isFrontend === false)
+        {
+            $this->enable = false;
+        }
+
         $this->eventDispatcher = GeneralUtility::makeInstance(EventDispatcherInterface::class);
 
         if($file instanceof FileReference)
         {
-            $this->init($conf, $info, $file, $cObj);
-            if ($this->enable && trim((string) $this->org_fileName) !== '') {
-                $new = $this->generateFileName();
-                if ($new !== '') {
-                    return $new;
+            if($this->enable) {
+                $this->init($conf, $info, $file, $cObj);
+                if (trim((string) $this->org_fileName) !== '') {
+                    $new = $this->generateFileName();
+                    if ($new !== '') {
+                        return $new;
+                    }
                 }
             }
+            else
+            {
+                return $this->getAbsoluteDomainFilePath($file);
+            }
         }
+
         if($file instanceof File)
         {
-            $this->org_fileName = $file->getPublicUrl();
+            if($isFrontend)
+            {
+                return $file->getPublicUrl();
+            }
+            else
+            {
+                return $this->getAbsoluteDomainFilePath($file);
+            }
         }
 
         return $this->org_fileName;
+    }
+
+    protected function getAbsoluteDomainFilePath(File|FileReference $file): string
+    {
+        return 'https://' . rtrim($_SERVER['HTTP_HOST'], '/') . $file->getPublicUrl();
     }
 
     /**

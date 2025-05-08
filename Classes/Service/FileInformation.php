@@ -61,12 +61,13 @@ class FileInformation
         }
 
         $fileReference = null;
-        $fileArray = $conf['file.'];
+        $fileArray = $conf['file.'] ?? [];
         if ($file instanceof FileReference) {
             $fileReference = $file;
         } else {
             try {
-                if ($fileArray['import.']) {
+                if (isset($fileArray['import.']))
+                {
                     $importedFile = trim($cObj->stdWrap('', $fileArray['import.']));
                     if (!empty($importedFile)) {
                         $file = $importedFile;
