@@ -278,7 +278,7 @@ class RealUrlImage extends ContentObjectRenderer
     protected function generateFileName()
     {
         // generate a text basis for a speaking file name
-        if ($this->fl_conf['data'] && $this->new_fileName === '') {
+        if (($this->fl_conf['data']??false) && $this->new_fileName === '') {
             $this->new_fileName = $this->generateTextBase();
         }
         if ($this->new_fileName === '') {
@@ -419,14 +419,14 @@ class RealUrlImage extends ContentObjectRenderer
         $textBase = $this->stdWrap($textBase, $this->fl_conf);
         // Convert some special tokens to the space character:
         $space = '-';
-        if ($this->fl_conf['spaceCharacter']) {
+        if ($this->fl_conf['spaceCharacter']??false) {
             $space = $this->fl_conf['spaceCharacter'];
         }
         // spaceCharacter
         $textBase = strtr($textBase, ' -+_', $space . $space . $space);
 
         // smartEncoding
-        if ($this->fl_conf['smartEncoding']) {
+        if ($this->fl_conf['smartEncoding']??false) {
             $charset = $GLOBALS['TYPO3_CONF_VARS']['BE']['forceCharset'] ?? $GLOBALS['TSFE']->defaultCharSet;
 
             if (is_null($charset)) {
@@ -496,7 +496,7 @@ class RealUrlImage extends ContentObjectRenderer
         $count = '';
         $cache = $this->getCache();
         while (1) {
-            if ($this->fl_conf['hashLength'] && $count && $count > 0) {
+            if (($this->fl_conf['hashLength']??false) && $count && $count > 0) {
                 $space = '-';
                 if ($this->fl_conf['spaceCharacter']) {
                     $space = $this->fl_conf['spaceCharacter'];
@@ -534,7 +534,7 @@ class RealUrlImage extends ContentObjectRenderer
         $currentPage = $this->getTypoScriptFrontendController()->id;
         if ($cache->has($cacheIdent)) {
             $data = $cache->get($cacheIdent);
-            $pids = GeneralUtility::intExplode(',', (string) ($data['page_id'] ?? []), true);
+            $pids = GeneralUtility::intExplode(',', (string) ($data['page_id'] ?? ''), true);
             if (!in_array($currentPage, $pids)) {
                 $pids[] = $currentPage;
             }
