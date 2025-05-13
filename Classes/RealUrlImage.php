@@ -191,7 +191,7 @@ class RealUrlImage extends ContentObjectRenderer
         {
             if($this->enable) {
                 $this->init($conf, $info, $file, $cObj);
-                if (trim((string) $this->org_fileName) !== '') {
+                if ($this->enable && trim((string) $this->org_fileName) !== '') {
                     $new = $this->generateFileName();
                     if ($new !== '') {
                         return $new;
