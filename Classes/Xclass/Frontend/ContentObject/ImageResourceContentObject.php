@@ -48,7 +48,7 @@ class ImageResourceContentObject extends \TYPO3\CMS\Frontend\ContentObject\Image
             // generate the image URL
             $theValue = $tx_flrealurlimage->addAbsRefPrefix($new_fileName);
             // stdWrap and return
-            return $this->cObj->stdWrap($theValue, $conf['stdWrap.']);
+            return $this->cObj->stdWrap($theValue, $conf['stdWrap.']??[]);
         }
         // ##################################
         // ### Here ends RealURL_Image ######
