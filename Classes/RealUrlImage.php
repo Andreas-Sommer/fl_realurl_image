@@ -605,7 +605,13 @@ class RealUrlImage extends ContentObjectRenderer
         }
 
         $absoluteNewPath = $publicPath . $relativeNewPath;
-        if (is_file($absoluteNewPath) || is_link($absoluteNewPath)) {
+        if (is_link($absoluteNewPath)) {
+            // keep valid links, replace dead links or links to another file (e.g. absolute paths of a former server)
+            if (realpath($absoluteNewPath) === realpath($absoluteOriginalPath)) {
+                return;
+            }
+            @unlink($absoluteNewPath);
+        } elseif (is_file($absoluteNewPath)) {
             return;
         }
 
@@ -636,11 +642,38 @@ class RealUrlImage extends ContentObjectRenderer
             if ($this->configuration->get('fileLinks') == 'copy') {
                 copy($absoluteOriginalPath, $absoluteNewPath);
             } elseif ($this->configuration->get('fileLinks') == 'symLink') {
-                symlink($absoluteOriginalPath, $absoluteNewPath);
+                $this->createSymlink($absoluteOriginalPath, $absoluteNewPath, $relativeOriginalPath, $relativeNewPath);
             } else {
                 link($relativeOriginalPath, $absoluteNewPath);
             }
         }
+    }
+
+    /**
+     * Creates a relative symlink, so the link survives a move of the installation.
+     * Falls back to an absolute target if the relative one does not resolve (e.g. symlinked typo3temp).
+     *
+     * @param string $absoluteOriginalPath
+     * @param string $absoluteNewPath
+     * @param string $relativeOriginalPath the path to the original image relative to the public path
+     * @param string $relativeNewPath the path to the new image relative to the public path
+     */
+    protected function createSymlink(
+        string $absoluteOriginalPath,
+        string $absoluteNewPath,
+        string $relativeOriginalPath,
+        string $relativeNewPath
+    ): void {
+        $depth = count(GeneralUtility::trimExplode('/', dirname($relativeNewPath), true));
+        $relativeTarget = str_repeat('../', $depth) . ltrim($relativeOriginalPath, '/');
+
+        if (@symlink($relativeTarget, $absoluteNewPath) && file_exists($absoluteNewPath)) {
+            return;
+        }
+        if (is_link($absoluteNewPath) && !file_exists($absoluteNewPath)) {
+            @unlink($absoluteNewPath);
+        }
+        @symlink($absoluteOriginalPath, $absoluteNewPath);
     }
 
     /**
