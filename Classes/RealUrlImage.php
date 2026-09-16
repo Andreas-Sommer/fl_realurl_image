@@ -208,7 +208,8 @@ class RealUrlImage extends ContentObjectRenderer
         {
             if($isFrontend)
             {
-                return $file->getPublicUrl();
+                // url of the processed file, not of the original
+                return (string)($info[3] ?? $file->getPublicUrl());
             }
             else
             {
